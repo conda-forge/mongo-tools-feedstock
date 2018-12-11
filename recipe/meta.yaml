@@ -10,15 +10,20 @@ source:
     sha256: 826962d3660f9455c581d891c0ccbce7fe0a1da4ff5d56b03a8e10c56791018e
 
 build:
-  number: 1000
+  number: 1001
   skip: True  # [win]
 
 requirements:
   build:
     - {{ compiler('go') }}
+    - {{ compiler('c') }}  # [linux]
     - git
     - make
-    - sed
+    - sed  # [osx]
+  host:
+    - libpcap  # [linux]
+  run:
+    - libpcap  # [linux]
 
 test:
   commands:
@@ -34,8 +39,8 @@ test:
     # Diagnostic Tools
     - mongostat --help
     - mongotop --help
-    # - mongoreplay --help  # mongoreplay needs libpcap and CGO_ENABLED=1 to work
-    # - mongoldap is not available in the OS repo
+    - if [ $(nproc) -ge 2 ]; then  mongoreplay --version; fi  # [linux]
+    # - mongoldap is not available in the OpenSource repo
     
     # GridFS
     - mongofiles --help

@@ -13,10 +13,15 @@ git tag -a -m "conda build of $PKG_NAME-r$PKG_VERSION" r${PKG_VERSION}
 . ./set_gopath.sh
 
 # Disable mongoreplay since we don't have libpcap
-sed -i 's/mongoreplay//' build.sh
+if [ $(uname) == "Darwin" ]; then
+    sed -i 's/mongoreplay//' build.sh
+else
+    export CGO_ENABLED=1
+    export CGO_CFLAGS=-I${PREFIX}/include
+    export CGO_LDFLAGS=-L${PREFIX}/lib
+fi
 
 # Build binaries
-export CGO_ENABLED=0
 ./build.sh
 
 # Move binaries in place
