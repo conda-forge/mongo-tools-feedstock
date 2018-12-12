@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/mongodb/{{ name }}/archive/r{{ version }}.tar.gz
-    sha256: 826962d3660f9455c581d891c0ccbce7fe0a1da4ff5d56b03a8e10c56791018e
+  - git_url: https://github.com/mongodb/{{ name }}.git
+    git_rev: r{{ version }}
 
 build:
   number: 1000
