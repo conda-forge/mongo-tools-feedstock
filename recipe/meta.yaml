@@ -1,5 +1,6 @@
 {% set name = "mongo-tools" %}
-{% set version = "4.0.4" %}
+{% set version = "4.2.5" %}
+{% set checkout_dir = "src/github.com/mongodb/mongo-tools" %}
 
 package:
   name: {{ name|lower }}
@@ -8,22 +9,23 @@ package:
 source:
   - git_url: https://github.com/mongodb/{{ name }}.git
     git_rev: r{{ version }}
+    folder: {{ checkout_dir }}
 
 build:
-  number: 1000
+  number: 0
   skip: True  # [win]
 
 requirements:
   build:
-    - {{ compiler('go') }}
-    - {{ compiler('c') }}  # [linux]
+    - {{ compiler('cgo') }}
+    - {{ compiler('c') }}
     - git
     - make
-    - sed  # [osx]
   host:
-    - libpcap  # [linux]
+    - libpcap
+    - openssl
   run:
-    - libpcap  # [linux]
+    - libpcap
 
 test:
   commands:
@@ -39,15 +41,16 @@ test:
     # Diagnostic Tools
     - mongostat --help
     - mongotop --help
-    - if [ $(nproc) -ge 2 ]; then  mongoreplay --version; fi  # [linux]
+    - if [ $(nproc) -ge 2 ]; then  mongoreplay --version; fi
     # - mongoldap is not available in the OpenSource repo
-    
+
     # GridFS
     - mongofiles --help
 
 about:
   home: https://www.mongodb.com
   license: Apache-2.0
+  license_file: {{ checkout_dir }}/LICENSE.md
   summary: Tools for managing and monitoring MongoDB clusters
   dev_url: https://github.com/mongodb/mongo-tools
   doc_url: https://docs.mongodb.com/master/reference/program/

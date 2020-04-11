@@ -1,17 +1,15 @@
-# Use upstream gopath setup
-. ./set_gopath.sh
+pushd src/github.com/mongodb/mongo-tools
 
-# Disable mongoreplay since we don't have libpcap
-if [ $(uname) == "Darwin" ]; then
-    sed -i 's/mongoreplay//' build.sh
-else
-    export CGO_ENABLED=1
-    export CGO_CFLAGS=-I${PREFIX}/include
-    export CGO_LDFLAGS=-L${PREFIX}/lib
-fi
+# Use upstream gopath setup
+. ./set_goenv.sh
+set_goenv
+
+export CGO_ENABLED=1
+export CGO_CFLAGS="${CPPFLAGS:-} ${CFLAGS:-} -I${PREFIX}/include"
+export CGO_LDFLAGS="${LDFLAGS:-} -L${PREFIX}/lib"
 
 # Build binaries
-./build.sh
+./build.sh ssl
 
 # Move binaries in place
 mkdir -p $PREFIX/bin
