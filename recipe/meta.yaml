@@ -1,26 +1,29 @@
 {% set name = "mongo-tools" %}
 {% set version = "4.2.5" %}
-{% set checkout_dir = "src/github.com/mongodb/mongo-tools" %}
+{% set gopath = "gopath/src/github.com/mongodb/mongo-tools" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - git_url: https://github.com/mongodb/{{ name }}.git
-    git_rev: r{{ version }}
-    folder: {{ checkout_dir }}
+  - folder: {{ gopath }}
+    url: https://github.com/mongodb/{{ name }}/archive/r{{ version }}.tar.gz
+    sha256: 3f18ea21ebbf24cde8bcd4926f3072644d02a37c7001ff7cad202775462f0834
+    patches:
+      - 0001-Use-GOROOT-GOPATH-CGO_FLAGS-GOBIN-GOEXE.patch
 
 build:
   number: 0
+  script:
+    - pushd {{ gopath }}
+    - ./build.sh ssl
   skip: True  # [win]
 
 requirements:
   build:
-    - {{ compiler('cgo') }}
+    - {{ compiler('cgo') }} 1.13
     - {{ compiler('c') }}
-    - git
-    - make
   host:
     - libpcap
     - openssl
@@ -50,7 +53,7 @@ test:
 about:
   home: https://www.mongodb.com
   license: Apache-2.0
-  license_file: {{ checkout_dir }}/LICENSE.md
+  license_file: {{ gopath }}/LICENSE.md
   summary: Tools for managing and monitoring MongoDB clusters
   dev_url: https://github.com/mongodb/mongo-tools
   doc_url: https://docs.mongodb.com/master/reference/program/
