@@ -1,5 +1,5 @@
 {% set name = "mongo-tools" %}
-{% set version = "4.2.5" %}
+{% set version = "4.3.2" %}
 {% set gopath = "gopath/src/github.com/mongodb/mongo-tools" %}
 
 package:
@@ -9,7 +9,7 @@ package:
 source:
   - folder: {{ gopath }}
     url: https://github.com/mongodb/{{ name }}/archive/r{{ version }}.tar.gz
-    sha256: 3f18ea21ebbf24cde8bcd4926f3072644d02a37c7001ff7cad202775462f0834
+    sha256: 2dd72787b9d8d1c393464acb1f3208058a36bc501b1a099c82b45e2c817a37f9
     patches:
       - 0001-Use-GOROOT-GOPATH-CGO_FLAGS-GOBIN-GOEXE.patch
 
@@ -18,7 +18,7 @@ build:
   script:
     - pushd {{ gopath }}
     - ./build.sh ssl
-  skip: True  # [win]
+  skip: true  # [win]
 
 requirements:
   build:
