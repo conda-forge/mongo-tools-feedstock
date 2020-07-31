@@ -12,13 +12,14 @@ source:
     sha256: 2dd72787b9d8d1c393464acb1f3208058a36bc501b1a099c82b45e2c817a37f9
     patches:
       - 0001-Use-GOROOT-GOPATH-CGO_FLAGS-GOBIN-GOEXE.patch
+      - 0002-google-gopacket-pcap-s-wpcap.dll-pcap.dll.patch
 
 build:
   number: 0
   script:
-    - pushd {{ gopath }}
-    - ./build.sh ssl
-  skip: true  # [win]
+    - cd {{ gopath }}
+    - ./build.sh ssl                                                       # [unix]
+    - bash -c 'PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./build.sh'  # [win]
 
 requirements:
   build:
@@ -26,7 +27,9 @@ requirements:
     - {{ compiler('c') }}
   host:
     - libpcap
-    - openssl
+    - openssl  # [unix]
+    - m2-bash  # [win]
+    - m2-base  # [win]
   run:
     - libpcap
 
@@ -44,7 +47,8 @@ test:
     # Diagnostic Tools
     - mongostat --help
     - mongotop --help
-    - if [ $(nproc) -ge 2 ]; then  mongoreplay --version; fi
+    - if [ $(nproc) -ge 2 ]; then  mongoreplay --version; fi  # [unix]
+    - mongoreplay --version                                   # [win]
     # - mongoldap is not available in the OpenSource repo
 
     # GridFS
