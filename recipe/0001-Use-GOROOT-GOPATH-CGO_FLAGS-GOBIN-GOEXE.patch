@@ -1,4 +1,4 @@
-From df875244a3435165091c139060d0bec37c9c14c2 Mon Sep 17 00:00:00 2001
+From 7350ce9b5e74ab23c174d80370c03f288cd12aeb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Patrick=20Sodr=C3=A9?= <psodre@gmail.com>
 Date: Fri, 24 Apr 2020 23:16:36 -0400
 Subject: [PATCH] Use GOROOT, GOPATH, CGO_FLAGS, GOBIN, GOEXE
@@ -10,7 +10,7 @@ Subject: [PATCH] Use GOROOT, GOPATH, CGO_FLAGS, GOBIN, GOEXE
  2 files changed, 14 insertions(+), 76 deletions(-)
 
 diff --git a/build.sh b/build.sh
-index 519f9c81..eff5aa20 100755
+index edc8a5ea..0d96866e 100755
 --- a/build.sh
 +++ b/build.sh
 @@ -13,13 +13,7 @@ cd $SCRIPT_DIR
@@ -30,7 +30,7 @@ index 519f9c81..eff5aa20 100755
  rm -rf vendor/pkg
 @@ -29,8 +23,8 @@ mkdir -p bin
  ec=0
- for i in bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop mongoreplay; do
+ for i in bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop; do
          echo "Building ${i}..."
 -        go build -o "bin/$i$BINARY_EXT" $(buildflags) -ldflags "$(print_ldflags)" -tags "$(print_tags $tags)" "$i/main/$i.go" || { echo "Error building $i"; ec=1; break; }
 -        ./bin/${i}${BINARY_EXT} --version | head -1
@@ -40,7 +40,7 @@ index 519f9c81..eff5aa20 100755
  
  if [ -t /dev/stdin ]; then
 diff --git a/set_goenv.sh b/set_goenv.sh
-index b76872f5..8f08d6b8 100755
+index 7623fe10..8f08d6b8 100755
 --- a/set_goenv.sh
 +++ b/set_goenv.sh
 @@ -7,84 +7,28 @@ set_goenv() {
@@ -111,7 +111,7 @@ index b76872f5..8f08d6b8 100755
 -        fi
 -    fi
 -
--    # Derive GOPATH from current directory, but error if the current diretory
+-    # Derive GOPATH from current directory, but error if the current directory
 -    # doesn't look like a GOPATH structure.
 -    if expr "$(pwd)" : '.*src/github.com/mongodb/mongo-tools$' > /dev/null; then
 -        export GOPATH=$(echo $(pwd) | perl -pe 's{src/github.com/mongodb/mongo-tools}{}')
@@ -130,7 +130,7 @@ index b76872f5..8f08d6b8 100755
  }
  
  print_ldflags() {
--    VersionStr="$(git describe)"
+-    VersionStr="$(go run release/release.go get-version)"
 -    GitCommit="$(git rev-parse HEAD)"
 +    # conda-forge: Uset PKG_VERSION
 +    VersionStr="${PKG_VERSION}"
@@ -140,5 +140,5 @@ index b76872f5..8f08d6b8 100755
      echo "-X ${importpath}.VersionStr=${VersionStr} -X ${importpath}.GitCommit=${GitCommit}"
  }
 -- 
-2.24.2 (Apple Git-127)
+2.26.2
 
