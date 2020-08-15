@@ -1,5 +1,5 @@
 {% set name = "mongo-tools" %}
-{% set version = "4.3.2" %}
+{% set version = "100.1.1" %}
 {% set gopath = "gopath/src/github.com/mongodb/mongo-tools" %}
 
 package:
@@ -8,11 +8,10 @@ package:
 
 source:
   - folder: {{ gopath }}
-    url: https://github.com/mongodb/{{ name }}/archive/r{{ version }}.tar.gz
-    sha256: 2dd72787b9d8d1c393464acb1f3208058a36bc501b1a099c82b45e2c817a37f9
+    url: https://github.com/mongodb/{{ name }}/archive/{{ version }}.tar.gz
+    sha256: 317f2480b6a888e1b55c4c63f60cc8c6ca26393ab4f4d6c2cd2915e33fcac248
     patches:
       - 0001-Use-GOROOT-GOPATH-CGO_FLAGS-GOBIN-GOEXE.patch
-      - 0002-google-gopacket-pcap-s-wpcap.dll-pcap.dll.patch
 
 build:
   number: 0
@@ -26,12 +25,9 @@ requirements:
     - {{ compiler('cgo') }} 1.13
     - {{ compiler('c') }}
   host:
-    - libpcap
     - openssl  # [unix]
     - m2-bash  # [win]
     - m2-base  # [win]
-  run:
-    - libpcap
 
 test:
   commands:
@@ -47,8 +43,6 @@ test:
     # Diagnostic Tools
     - mongostat --help
     - mongotop --help
-    - if [ $(nproc) -ge 2 ]; then  mongoreplay --version; fi  # [unix]
-    - mongoreplay --version                                   # [win]
     # - mongoldap is not available in the OpenSource repo
 
     # GridFS
