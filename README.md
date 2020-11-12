@@ -5,11 +5,13 @@ Home: https://www.mongodb.com
 
 Package license: Apache-2.0
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mongo-tools-feedstock/blob/master/LICENSE.txt)
 
 Summary: Tools for managing and monitoring MongoDB clusters
 
+Development: https://github.com/mongodb/mongo-tools
 
+Documentation: https://docs.mongodb.com/master/reference/program/
 
 Current build status
 ====================
