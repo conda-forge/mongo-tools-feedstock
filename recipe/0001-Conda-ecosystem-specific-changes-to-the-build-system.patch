@@ -1,0 +1,53 @@
+From 9c717fecdbfb75a42c9a3d6bacc586a83454898d Mon Sep 17 00:00:00 2001
+From: Nehal J Wani <nehaljw.kkd1@gmail.com>
+Date: Sat, 14 Nov 2020 15:22:05 -0500
+Subject: [PATCH] Conda ecosystem specific changes to the build system
+
+---
+ buildscript/build.go | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
+
+diff --git a/buildscript/build.go b/buildscript/build.go
+index feb84965..4732a3cd 100644
+--- a/buildscript/build.go
++++ b/buildscript/build.go
+@@ -9,7 +9,6 @@ import (
+ 	"path/filepath"
+ 	"strings"
+ 
+-	"github.com/craiggwilson/goke/pkg/git"
+ 	"github.com/craiggwilson/goke/pkg/sh"
+ 	"github.com/craiggwilson/goke/task"
+ 	"github.com/mongodb/mongo-tools-common/testtype"
+@@ -89,8 +88,7 @@ func buildToolBinary(ctx *task.Context, tool string, outDir string) error {
+ 	}
+ 
+ 	args := []string{
+-		"build",
+-		"-o", outPath,
++		"install",
+ 	}
+ 	args = append(args, buildFlags...)
+ 	args = append(args, mainFile)
+@@ -167,17 +165,7 @@ func getTags(ctx *task.Context) ([]string, error) {
+ // getLdflags gets the ldflags that should be used when building the
+ // tools on the current platform.
+ func getLdflags(ctx *task.Context) (string, error) {
+-	versionStr, err := runCmd(ctx, "go", "run", "release/release.go", "get-version")
+-	if err != nil {
+-		return "", fmt.Errorf("failed to get current version: %w", err)
+-	}
+-
+-	gitCommit, err := git.SHA1(ctx)
+-	if err != nil {
+-		return "", fmt.Errorf("failed to get git commit hash: %w", err)
+-	}
+-
+-	ldflags := fmt.Sprintf("-X main.VersionStr=%s -X main.GitCommit=%s", versionStr, gitCommit)
++	ldflags := fmt.Sprintf("-X main.VersionStr=%s", os.Getenv("PKG_VERSION"))
+ 	return ldflags, nil
+ }
+ 
+-- 
+2.26.2
+
