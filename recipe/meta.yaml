@@ -11,21 +11,22 @@ source:
     url: https://github.com/mongodb/{{ name }}/archive/{{ version }}.tar.gz
     sha256: 33e6777b94bade0417b757f391ae1e71073a389e991ab6c59392e368552fb5e6
     patches:
-      - 0001-Use-GOROOT-GOPATH-CGO_FLAGS-GOBIN-GOEXE.patch
+      - 0001-Conda-ecosystem-specific-changes-to-the-build-system.patch
 
 build:
   number: 0
   script:
     - cd {{ gopath }}
-    - ./build.sh ssl                                                       # [unix]
-    - bash -c 'PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./build.sh'  # [win]
+    - ./make build                                                           # [unix]
+    - bash -c 'PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./make build'  # [win]
 
 requirements:
   build:
     - {{ compiler('cgo') }} 1.13
-    - {{ compiler('c') }}
+    - {{ compiler('c') }}        # [unix]
+    - {{ compiler('m2w64_c') }}  # [win]
   host:
-    - openssl  # [unix]
+    - krb5     # [unix]
     - m2-bash  # [win]
     - m2-base  # [win]
 

@@ -1,0 +1,82 @@
+From 429d47d32cb4d261aab029218aa635be5d5d7af6 Mon Sep 17 00:00:00 2001
+From: Nehal J Wani <nehaljw.kkd1@gmail.com>
+Date: Sat, 14 Nov 2020 15:22:05 -0500
+Subject: [PATCH] Conda ecosystem specific changes to the build system
+
+---
+ buildscript/build.go         | 19 ++-----------------
+ release/platform/platform.go |  8 ++++++++
+ 2 files changed, 10 insertions(+), 17 deletions(-)
+
+diff --git a/buildscript/build.go b/buildscript/build.go
+index feb84965..8eaef4cf 100644
+--- a/buildscript/build.go
++++ b/buildscript/build.go
+@@ -9,7 +9,6 @@ import (
+ 	"path/filepath"
+ 	"strings"
+ 
+-	"github.com/craiggwilson/goke/pkg/git"
+ 	"github.com/craiggwilson/goke/pkg/sh"
+ 	"github.com/craiggwilson/goke/task"
+ 	"github.com/mongodb/mongo-tools-common/testtype"
+@@ -89,8 +88,7 @@ func buildToolBinary(ctx *task.Context, tool string, outDir string) error {
+ 	}
+ 
+ 	args := []string{
+-		"build",
+-		"-o", outPath,
++		"install",
+ 	}
+ 	args = append(args, buildFlags...)
+ 	args = append(args, mainFile)
+@@ -167,17 +165,7 @@ func getTags(ctx *task.Context) ([]string, error) {
+ // getLdflags gets the ldflags that should be used when building the
+ // tools on the current platform.
+ func getLdflags(ctx *task.Context) (string, error) {
+-	versionStr, err := runCmd(ctx, "go", "run", "release/release.go", "get-version")
+-	if err != nil {
+-		return "", fmt.Errorf("failed to get current version: %w", err)
+-	}
+-
+-	gitCommit, err := git.SHA1(ctx)
+-	if err != nil {
+-		return "", fmt.Errorf("failed to get git commit hash: %w", err)
+-	}
+-
+-	ldflags := fmt.Sprintf("-X main.VersionStr=%s -X main.GitCommit=%s", versionStr, gitCommit)
++	ldflags := fmt.Sprintf("-X main.VersionStr=%s", os.Getenv("PKG_VERSION"))
+ 	return ldflags, nil
+ }
+ 
+@@ -231,8 +219,5 @@ func selectedTools(ctx *task.Context) []string {
+ }
+ 
+ func getPlatform() (platform.Platform, error) {
+-	if os.Getenv("CI") != "" {
+-		return platform.GetFromEnv()
+-	}
+ 	return platform.DetectLocal()
+ }
+diff --git a/release/platform/platform.go b/release/platform/platform.go
+index 4c355fda..4579dad6 100644
+--- a/release/platform/platform.go
++++ b/release/platform/platform.go
+@@ -83,6 +83,14 @@ func DetectLocal() (Platform, error) {
+ 		return pf, nil
+ 	}
+ 
++	if strings.HasPrefix(kernelName, "MSYS_NT") {
++		pf, ok := GetByVariant("windows")
++		if !ok {
++			panic("windows platform name changed")
++		}
++		return pf, nil
++	}
++
+ 	return Platform{}, fmt.Errorf("failed to detect local platform from kernel name %q", kernelName)
+ }
+ 
+-- 
+2.24.1
+
