@@ -10,6 +10,8 @@ cdt_name:
 - cos7
 cgo_compiler:
 - go-cgo
+cgo_compiler_version:
+- '1.13'
 channel_sources:
 - conda-forge
 channel_targets:
