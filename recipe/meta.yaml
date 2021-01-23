@@ -17,8 +17,8 @@ build:
   number: 0
   script:
     - cd {{ gopath }}
-    - ./make build                                                           # [unix]
-    - bash -c 'PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./make build'  # [win]
+    - GOPATH=$SRC_DIR/gopath ./make build                                                           # [unix]
+    - bash -c 'GOPATH=$SRC_DIR/gopath PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./make build'  # [win]
 
 requirements:
   build:
