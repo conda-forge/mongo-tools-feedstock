@@ -22,7 +22,7 @@ build:
 
 requirements:
   build:
-    - {{ compiler('cgo') }} 1.13
+    - {{ compiler('cgo') }}
     - {{ compiler('c') }}        # [unix]
     - {{ compiler('m2w64_c') }}  # [win]
   host:
