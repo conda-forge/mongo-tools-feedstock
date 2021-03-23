@@ -19,7 +19,7 @@ build:
     - cd {{ gopath }}
     - GOPATH=$SRC_DIR/gopath ./make build                                                           # [unix]
     - bash -c 'GOPATH=$SRC_DIR/gopath PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./make build'  # [win]
-    - rm -fr $SRC_DIR/gopath                                                                        # [unix]
+    - go clean -modcache
 
 requirements:
   build:
