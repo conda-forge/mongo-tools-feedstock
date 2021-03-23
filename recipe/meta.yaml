@@ -1,5 +1,5 @@
 {% set name = "mongo-tools" %}
-{% set version = "100.3.0" %}
+{% set version = "100.3.1" %}
 {% set gopath = "gopath/src/github.com/mongodb/mongo-tools" %}
 
 package:
@@ -9,7 +9,7 @@ package:
 source:
   - folder: {{ gopath }}
     url: https://github.com/mongodb/{{ name }}/archive/{{ version }}.tar.gz
-    sha256: e989b1107fe7ba295e5c1a34fc63c09cd27732042d6ce800d04b12f4600af5e6
+    sha256: fea39c8a938ed0d65454c791962f38a16677c654648543a3c534770c5d4a8c31
     patches:
       - 0001-Conda-ecosystem-specific-changes-to-the-build-system.patch
 
@@ -19,6 +19,7 @@ build:
     - cd {{ gopath }}
     - GOPATH=$SRC_DIR/gopath ./make build                                                           # [unix]
     - bash -c 'GOPATH=$SRC_DIR/gopath PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./make build'  # [win]
+    - go clean -modcache
 
 requirements:
   build:
