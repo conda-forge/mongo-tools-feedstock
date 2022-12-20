@@ -14,7 +14,7 @@ source:
       - 0001-Conda-ecosystem-specific-changes-to-the-build-system.patch
 
 build:
-  number: 0
+  number: 1
   script:
     - cd {{ gopath }}
     - GOPATH=$SRC_DIR/gopath ./make build                                                           # [unix]
