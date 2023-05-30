@@ -9,5 +9,3 @@ macos_min_version:         # [osx]
   - 10.14                  # [osx]
 cgo_compiler_version:
   - 1.19
-c_compiler_version:        # [linux]
-  - 9                      # [linux]
