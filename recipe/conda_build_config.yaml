@@ -4,9 +4,9 @@ pin_run_as_build:
   libpcap:
     max_pin: x.x
 MACOSX_DEPLOYMENT_TARGET:  # [osx]
-  - 10.11                  # [osx]
+  - 10.14                  # [osx]
 macos_min_version:         # [osx]
-  - 10.11                  # [osx]
+  - 10.14                  # [osx]
 cgo_compiler_version:
   - 1.19
 c_compiler_version:        # [linux]
