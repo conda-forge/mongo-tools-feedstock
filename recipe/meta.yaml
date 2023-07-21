@@ -1,5 +1,5 @@
 {% set name = "mongo-tools" %}
-{% set version = "100.7.3" %}
+{% set version = "100.7.4" %}
 {% set gopath = "gopath/src/github.com/mongodb/mongo-tools" %}
 
 package:
@@ -9,7 +9,7 @@ package:
 source:
   - folder: {{ gopath }}
     url: https://github.com/mongodb/{{ name }}/archive/{{ version }}.tar.gz
-    sha256: e3197849430f08e68a39c961e087d4e3f5b0c624b3a4c454c4b492703ee1092b
+    sha256: 7a0827041242c9e89c3a9a1cfa198ad4021700c5d0dbe127f2481727fa4e6953
     patches:
       - 0001-Conda-ecosystem-specific-changes-to-the-build-system.patch
 
