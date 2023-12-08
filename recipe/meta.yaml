@@ -20,12 +20,14 @@ build:
     - GOPATH=$SRC_DIR/gopath ./make build                                                           # [unix]
     - bash -c 'GOPATH=$SRC_DIR/gopath PREFIX=$LIBRARY_PREFIX PATH=$PATH:$LIBRARY_BIN ./make build'  # [win]
     - go clean -modcache
+    - go-licenses save --save_path licenses .
 
 requirements:
   build:
     - {{ compiler('cgo') }}
     - {{ compiler('c') }}        # [unix]
     - {{ compiler('m2w64_c') }}  # [win]
+    - go-licenses
   host:
     - krb5     # [unix]
     - m2-bash  # [win]
@@ -53,7 +55,9 @@ test:
 about:
   home: https://www.mongodb.com
   license: Apache-2.0
-  license_file: {{ gopath }}/LICENSE.md
+  license_file: 
+    - {{ gopath }}/LICENSE.md
+    - {{ gopath }}/licenses/
   summary: Tools for managing and monitoring MongoDB clusters
   dev_url: https://github.com/mongodb/mongo-tools
   doc_url: https://docs.mongodb.com/master/reference/program/
