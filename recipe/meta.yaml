@@ -1,5 +1,5 @@
 {% set name = "mongo-tools" %}
-{% set version = "100.9.4" %}
+{% set version = "100.10.0" %}
 {% set gopath = "gopath/src/github.com/mongodb/mongo-tools" %}
 
 package:
@@ -9,7 +9,7 @@ package:
 source:
   - folder: {{ gopath }}
     url: https://github.com/mongodb/{{ name }}/archive/{{ version }}.tar.gz
-    sha256: 513c8471f7a733f0582b521330ccada326cc01f47da489bda7b5b42959564385
+    sha256: 0eb6254caa828976d077ed1e29d966ecc5671aaa23c7932661d52372031c7866
     patches:
       - 0001-Conda-ecosystem-specific-changes-to-the-build-system.patch
 
@@ -26,7 +26,9 @@ requirements:
   build:
     - {{ compiler('cgo') }}
     - {{ compiler('c') }}        # [unix]
+    - {{ stdlib("c") }}          # [unix]
     - {{ compiler('m2w64_c') }}  # [win]
+    - {{ stdlib("m2w64_c") }}    # [win]
     - go-licenses
   host:
     - krb5     # [unix]
@@ -55,7 +57,7 @@ test:
 about:
   home: https://www.mongodb.com
   license: Apache-2.0
-  license_file: 
+  license_file:
     - {{ gopath }}/LICENSE.md
     - {{ gopath }}/licenses/
   summary: Tools for managing and monitoring MongoDB clusters
