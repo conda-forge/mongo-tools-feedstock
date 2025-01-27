@@ -9,7 +9,7 @@ package:
 source:
   - folder: {{ gopath }}
     url: https://github.com/mongodb/{{ name }}/archive/{{ version }}.tar.gz
-    sha256: 00d5d461690119fff84dfdb2794b446087527fe57ab527c2ab3a3cc698f0fbb8
+    sha256: 1d3e6f9b83ded015300fc77b739d19d97afc50ec79d20854459eb2841713ffd0
     patches:
       - 0001-Conda-ecosystem-specific-changes-to-the-build-system.patch
 
