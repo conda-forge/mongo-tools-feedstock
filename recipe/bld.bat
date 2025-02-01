@@ -1,13 +1,13 @@
 @echo on
 
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\bsondump -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\bsondump\main\bsondump.go || goto :error
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongodump -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongodump\main\mongodump.go || goto :error
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongorestore -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongorestore\main\mongorestore.go || goto :error
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongoimport -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongoimport\main\mongoimport.go || goto :error
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongoexport -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongoexport\main\mongoexport.go || goto :error
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongostat -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongostat\main\mongostat.go || goto :error
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongotop -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongotop\main\mongotop.go || goto :error
-go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongofiles -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongofiles\main\mongofiles.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\bsondump.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\bsondump\main\bsondump.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongodump.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongodump\main\mongodump.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongorestore.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongorestore\main\mongorestore.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongoimport.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongoimport\main\mongoimport.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongoexport.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongoexport\main\mongoexport.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongostat.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongostat\main\mongostat.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongotop.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongotop\main\mongotop.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongofiles.exe -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongofiles\main\mongofiles.go || goto :error
 go-licenses save .\bsondump --save_path=license-files_bsondump || goto :error
 go-licenses save .\mongodump --save_path=license-files_mongodump || goto :error
 go-licenses save .\mongorestore --save_path=license-files_mongorestore || goto :error
