@@ -1,21 +1,22 @@
 @echo on
 
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/bsondump -ldflags="-s -w" bsondump || goto :error
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/mongodump -ldflags="-s -w" mongodump || goto :error
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/mongorestore -ldflags="-s -w" mongorestore || goto :error
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/mongoimport -ldflags="-s -w" mongoimport || goto :error
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/mongoexport -ldflags="-s -w" mongoexport || goto :error
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/mongostat -ldflags="-s -w" mongostat || goto :error
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/mongotop -ldflags="-s -w" mongotop || goto :error
-go build -buildmode=pie -trimpath -o=${PREFIX}/bin/mongofiles -ldflags="-s -w" mongofiles || goto :error
-go-licenses save bsondump --save_path=license-files_bsondump || goto :error
-go-licenses save mongodump --save_path=license-files_mongodump || goto :error
-go-licenses save mongorestore --save_path=license-files_mongorestore || goto :error
-go-licenses save mongoimport --save_path=license-files_mongoimport || goto :error
-go-licenses save mongoexport --save_path=license-files_mongoexport || goto :error
-go-licenses save mongostat --save_path=license-files_mongostat || goto :error
-go-licenses save mongotop --save_path=license-files_mongotop || goto :error
-go-licenses save mongofiles --save_path=license-files_mongofiles || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\bsondump -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\bsondump\main\bsondump.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongodump -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongodump\main\mongodump.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongorestore -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongorestore\main\mongorestore.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongoimport -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongoimport\main\mongoimport.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongoexport -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongoexport\main\mongoexport.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongostat -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongostat\main\mongostat.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongotop -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongotop\main\mongotop.go || goto :error
+go build -buildmode=pie -trimpath -o=%LIBRARY_PREFIX%\bin\mongofiles -ldflags="-X main.VersionStr=%PKG_VERSION% -s -w" .\mongofiles\main\mongofiles.go || goto :error
+go-licenses save .\bsondump --save_path=license-files_bsondump || goto :error
+go-licenses save .\mongodump --save_path=license-files_mongodump || goto :error
+go-licenses save .\mongorestore --save_path=license-files_mongorestore || goto :error
+go-licenses save .\mongoimport --save_path=license-files_mongoimport || goto :error
+go-licenses save .\mongoexport --save_path=license-files_mongoexport || goto :error
+go-licenses save .\mongostat --save_path=license-files_mongostat || goto :error
+go-licenses save .\mongotop --save_path=license-files_mongotop || goto :error
+go-licenses save .\mongofiles --save_path=license-files_mongofiles || goto :error
+go clean -modcache
 
 goto :EOF
 
