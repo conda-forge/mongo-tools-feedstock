@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/mongodb/mongo-tools/archive/{{ version }}.tar.gz
-  sha256: cf546f6f227a562bd5dca36fd1cc10c3c445a62676d114c4217eca9aae43e4a2
+  sha256: 407447dda5f2a2e59a720ea383b6e20b165838d427211879ebded1c1af0606fe
 
 build:
   number: 0
