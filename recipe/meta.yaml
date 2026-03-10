@@ -1,4 +1,4 @@
-{% set version = "100.13.0" %}
+{% set version = "100.15.0" %}
 
 package:
   name: mongo-tools
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/mongodb/mongo-tools/archive/{{ version }}.tar.gz
-  sha256: 44f6b17a78dfd129e1f715382bfde59bcc1329ea012c534f77e29582dc57784c
+  sha256: 1081272537a9d90c0618e286d2c5774480f18da38a668ed269c0fd9ae2dd7e8e
 
 build:
   number: 0
